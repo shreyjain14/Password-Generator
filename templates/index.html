@@ -1,0 +1,68 @@
+<html>
+<head>
+    <title> Password Generator </title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+</head>
+<body>
+    {% if pw %}
+    <form action="{{ url_for('read_form')}}" method="post">
+        <input type="number" name="length" placeholder="Enter the number of password characters (At least 9 and at most 100)" required class="number-input">
+        <br>
+        <input type="checkbox" name="uppercase">
+        <label>Uppercase</label>
+        <br>
+        <input type="checkbox" name="lowercase">
+        <label>Lowercase</label>
+        <br>
+        <input type="checkbox" name="symbols">
+        <label>Symbol</label>
+        <br>
+        <input type="checkbox" name="numbers">
+        <label>Numbers</label>
+        <br>
+        <button type="submit" class="number-input">Submit</button>
+    </form>
+    <div class="password">
+        <label>{{ pw }}</label>
+        <label id="password">{{ password }}</label>
+        <br>
+        <label>{{ scoreStrength }}</label>
+        {% if password %}
+        <br>
+        <button id="btn">Copy password to clipboard</button>
+        <br>
+        <label id="myTooltip"></label>
+        {% block scripts %}
+        <script>
+            document.getElementById("btn").onclick = function() { copyToClipboard() };
+            function copyToClipboard() {
+                var password = document.getElementById("password").textContent;
+                navigator.clipboard.writeText('{{  password  }}');
+                document.getElementById('myTooltip').innerHTML = 'Copied to Clipboard';
+
+            }
+        </script>
+        {% endblock %}
+        {% endif %}
+    </div>
+    {% else %}
+    <form action="{{ url_for('read_form')}}" method="post">
+        <input type="number" name="length" placeholder="Enter the number of password characters (At least 9 and at most 100)" required class="number-input">
+        <br>
+        <input type="checkbox" name="uppercase">
+        <label>Uppercase</label>
+        <br>
+        <input type="checkbox" name="lowercase">
+        <label>Lowercase</label>
+        <br>
+        <input type="checkbox" name="symbols">
+        <label>Symbol</label>
+        <br>
+        <input type="checkbox" name="numbers">
+        <label>Numbers</label>
+        <br>
+        <button type="submit" class="number-input">Submit</button>
+    </form>
+    {% endif %}
+</body>
+</html>
