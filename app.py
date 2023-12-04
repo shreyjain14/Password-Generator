@@ -24,4 +24,5 @@ def read_form():
     return render_template('index.html', pw=pw, password=password, scoreStrength=strength)
 
 
-app.run()
+if __name__ == '__main__':
+    app.run()
